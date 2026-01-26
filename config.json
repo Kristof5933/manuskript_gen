@@ -1,0 +1,82 @@
+{
+  "small_no_revisions": {
+    "title": "Small project with no revisions",
+    "labels": { "quantity": 2 },
+    "characters": { "quantity": 2 },
+    "plots": { "quantity": 2 },
+    "world": { "quantity": 3, "levels": 1 },
+    "sections": { "quantity": 2, "levels": 1, "paragraphs" : 2, "revisions" : 0 }
+  },
+  "small_with_revisions": {
+    "title": "Small project with revisions",
+    "labels": { "quantity": 2 },
+    "characters": { "quantity": 2 },
+    "plots": { "quantity": 2 },
+    "world": { "quantity": 3, "levels": 1 },
+    "sections": { "quantity": 2, "levels": 1, "paragraphs" : 2, "revisions" : 1 }
+  },
+  "medium_no_revisions": {
+    "title": "Medium project with no revisions",
+    "labels": { "quantity": 10 },
+    "characters": { "quantity": 10 },
+    "plots": { "quantity": 10 },
+    "world": { "quantity": 5, "levels": 2 },
+    "sections": { "quantity": 4, "levels": 2, "paragraphs" : 3, "revisions" : 0 }
+  },
+  "medium_with_revisions": {
+    "title": "Medium project with revisions",
+    "labels": { "quantity": 10 },
+    "characters": { "quantity": 10 },
+    "plots": { "quantity": 10 },
+    "world": { "quantity": 5, "levels": 2 },
+    "sections": { "quantity": 4, "levels": 2, "paragraphs" : 3, "revisions" : 1 }
+  },
+  "large_no_revisions": {
+    "title": "Large project with no revisions",
+    "labels": { "quantity": 15 },
+    "characters": { "quantity": 15 },
+    "plots": { "quantity": 15 },
+    "world": { "quantity": 5, "levels": 3 },
+    "sections": { "quantity": 5, "levels": 3, "paragraphs" : 50, "revisions" : 0 }
+  },
+  "large_with_revisions": {
+    "title": "Large project with revisions",
+    "labels": { "quantity": 15 },
+    "characters": { "quantity": 15 },
+    "plots": { "quantity": 15 },
+    "world": { "quantity": 5, "levels": 3 },
+    "sections": { "quantity": 5, "levels": 3, "paragraphs" : 50, "revisions" : 1 }
+  },  
+  "huge_no_revisions": {
+    "title": "Huge project with no revisions",
+    "labels": { "min": 50, "max": 100 },
+    "characters": { "min": 60, "max": 100 },
+    "plots": { "min": 50, "max": 100 },
+    "world": { "min": 20, "max": 30, "detail": 3 },
+    "sections": { "min": 8, "max": 13, "detail": 3, "paragraphs" : 50, "revisions" : 0 }
+  },
+  "huge_with_revisions": {
+    "title": "Huge project with revisions",
+    "labels": { "min": 50, "max": 100 },
+    "characters": { "min": 60, "max": 100 },
+    "plots": { "min": 50, "max": 100 },
+    "world": { "min": 20, "max": 30, "detail": 3 },
+    "sections": { "min": 8, "max": 13, "detail": 3, "paragraphs" : 50, "revisions" : 1 }
+  },
+  "many_small_no_revisions": {
+    "title": "Project with many small chapters and no revisions",
+    "labels": { "quantity": 50 },
+    "characters": { "quantity": 50 },
+    "plots": { "quantity": 50 },
+    "world": { "quantity": 20, "levels": 3 },
+    "sections": { "quantity": 40, "levels": 2, "paragraphs" : 1, "revisions" : 0 }
+  },
+  "many_small_with_revisions": {
+    "title": "Project with many small chapters and revisions",
+    "labels": { "quantity": 50 },
+    "characters": { "quantity": 50 },
+    "plots": { "quantity": 50 },
+    "world": { "quantity": 20, "levels": 3 },
+    "sections": { "quantity": 40, "levels": 2, "paragraphs" : 1, "revisions" : 1 }
+  }
+}
