@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
+# --!-- coding: utf8 --!--
 
 from prompt_toolkit.shortcuts import radiolist_dialog
 from util import FakeService

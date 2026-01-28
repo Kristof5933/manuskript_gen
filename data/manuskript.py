@@ -4,7 +4,9 @@
 import os
 import shutil
 from config import ConfigLoader, Config
-from data import Characters
+# TODO: I'd like to have from data import A, B
+from data.characters import Characters
+from data.summary import Summary
 
 class Manuskript:
     def __init__(self, path: str, profileName: str):
@@ -17,6 +19,7 @@ class Manuskript:
         self.createAndCleanOutputFolder(self.dataPath)
 
         self.characters = Characters(self.dataPath, self.config)
+        self.summary = Summary(self.dataPath, self.config)
 
     def createAndCleanOutputFolder(self, outputFolder: str):
         os.makedirs(outputFolder, exist_ok=True)
@@ -30,6 +33,7 @@ class Manuskript:
 
     def save(self):
 
+        self.summary.save()
         self.characters.save()
 
         # TODO: handle zip version

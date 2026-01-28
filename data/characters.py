@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# --!-- coding: utf8 --!--
+
 import os
 from util import FakeService
 from config import Config
@@ -23,6 +26,7 @@ class Character(AbstractMmd):
     def __init__(self, dataPath: str, ID: int):
         AbstractMmd.__init__(self)
         fakeService = FakeService()
+        self.metaSpacing = 21
         
         self.Name = fakeService.name()
         self.ID = ID
