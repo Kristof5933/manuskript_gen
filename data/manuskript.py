@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+# --!-- coding: utf8 --!--
+
+import os
+import shutil
+from config import ConfigLoader, Config
+from data import Characters
+
+class Manuskript:
+    def __init__(self, path: str, profileName: str):
+        self.basePath = path
+        self.manuskriptName = profileName # TODO : maybe add a specific output name instead of the profile name
+        self.profileName = profileName 
+        self.config: Config = ConfigLoader().loadConfig(profileName)
+
+        self.dataPath = os.path.join(path, self.manuskriptName)
+        self.createAndCleanOutputFolder(self.dataPath)
+
+        self.characters = Characters(self.dataPath, self.config)
+
+    def createAndCleanOutputFolder(self, outputFolder: str):
+        os.makedirs(outputFolder, exist_ok=True)
+
+        for filename in os.listdir(outputFolder):
+            file_path = os.path.join(outputFolder, filename)
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+
+    def save(self):
+
+        self.characters.save()
+
+        # TODO: handle zip version
+        mskFile = os.path.join(self.basePath, f"{self.manuskriptName}.msk")
+        with open(mskFile, "w") as f:
+            f.write("1")
+
+

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from prompt_toolkit.shortcuts import radiolist_dialog
-from config import ConfigLoader, Config
 from util import FakeService
-from data import Characters
+from data import Manuskript
+from config import ConfigLoader
 
 def menu():
     profiles = ConfigLoader().listAvailableConfigurations()
@@ -19,13 +19,8 @@ def menu():
 def generateNovel(profileName: str):
     print(f"Generating novel for the profile {profileName}")
 
-    config: Config = ConfigLoader().loadConfig(profileName)
-
-    print(config)
-
-    characters = Characters(config)
-    characters.debug()
-
+    manuskript = Manuskript("../output", profileName)
+    manuskript.save()
 
 def run():
     ConfigLoader("../config.json")

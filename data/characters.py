@@ -1,40 +1,64 @@
+import os
 from util import FakeService
 from config import Config
+from data.abstractMmd import AbstractMmd
+from data.abstractData import AbstractData
+from util import safeFilename
+from dataclasses import dataclass, field, fields
 
-class CharacterProperty:
-    def __init__(self, fakeService: FakeService):
-        self.propertyName: str= fakeService.words(3)
-        self.propertyValue: str = fakeService.words(5)
+@dataclass(init=False)
+class Character(AbstractMmd):
+    # caution: property name case corresponds to file output case
+    Name: str
+    ID: int
+    Importance: int 
+    POV: bool 
+    Motivation: str
+    Goal: str
+    Conflict: str
+    Epiphany: str
+    Notes: str
+    Color: str
 
-class Character:
-    def __init__(self, ID: int):
+    def __init__(self, dataPath: str, ID: int):
+        AbstractMmd.__init__(self)
         fakeService = FakeService()
-        self.name: str = fakeService.name()
-        self.ID: int = ID
-        self.importance: int = fakeService.int(0, 2)
-        self.POV: bool = fakeService.boolean(chance_of_getting_true=25)
-        self.motivation: str = fakeService.markdown(2)
-        self.goal: str = fakeService.markdown(2)
-        self.conflict: str = fakeService.markdown(2)
-        self.epiphany: str = fakeService.markdown(2)
-        self.phraseSummary: str = fakeService.words(20)
-        self.paragraphSummary: str = fakeService.markdown(2)
-        self.fullSummary: str = fakeService.markdown(5)
-        self.notes: str = fakeService.markdown(2)
-        self.color: str = fakeService.color()
-
-        self.additionalProperties = []
+        
+        self.Name = fakeService.name()
+        self.ID = ID
+        self.Importance = fakeService.int(0, 2)
+        self.POV = fakeService.boolean(chance_of_getting_true=25)
+        self.Motivation = fakeService.markdown(2)
+        self.Goal = fakeService.markdown(2)
+        self.Conflict = fakeService.markdown(2)
+        self.Epiphany = fakeService.markdown(2)
+        self.additionalProperties["Phrase Summary"] = fakeService.words(20)
+        self.additionalProperties["Paragraph Summary"] = fakeService.words(2)
+        self.additionalProperties["Full Summary"] = fakeService.markdown()
+        self.Notes: str = fakeService.markdown(2)
+        self.Color: str = fakeService.color()
 
         for i in range(5):
-            self.additionalProperties.append(CharacterProperty(fakeService))
+            self.additionalProperties[fakeService.words(3)] = fakeService.words(5)
 
-class Characters:
-    def __init__(self, config: Config):
+        self._changePath(os.path.join(dataPath,safeFilename(f"{self.ID}-{self.Name}", "txt")))
+
+    # def save(self):
+    #     self.saveMMD()
+class Characters(AbstractData):
+    def __init__(self, dataPath: str, config: Config):
+        AbstractData.__init__(self,os.path.join(dataPath, "characters"))
+
         self.characters: list[Character] = []
         for i in range(config.charactersQuantity):
-            self.characters.append(Character(i))
+            self.characters.append(Character(self.dataPath, i))
 
     def debug(self):
         for character in self.characters:
-            print(f"{character.ID} = {character.name}")
+            print(f"{character.ID} = {character.Name}")
+
+    def save(self):
+        os.makedirs(self.dataPath, exist_ok=True)
+        for character in self.characters:
+            character.save()
 
