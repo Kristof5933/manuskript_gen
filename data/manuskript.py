@@ -7,6 +7,8 @@ from config import ConfigLoader, Config
 # TODO: I'd like to have from data import A, B
 from data.characters import Characters
 from data.summary import Summary
+from data.labels import Labels
+from data.infos import Infos
 
 class Manuskript:
     def __init__(self, path: str, profileName: str):
@@ -20,6 +22,8 @@ class Manuskript:
 
         self.characters = Characters(self.dataPath, self.config)
         self.summary = Summary(self.dataPath, self.config)
+        self.labels = Labels(self.dataPath, self.config)
+        self.infos = Infos(self.dataPath, self.config)
 
     def createAndCleanOutputFolder(self, outputFolder: str):
         os.makedirs(outputFolder, exist_ok=True)
@@ -35,6 +39,8 @@ class Manuskript:
 
         self.summary.save()
         self.characters.save()
+        self.labels.save()
+        self.infos.save()
 
         # TODO: handle zip version
         mskFile = os.path.join(self.basePath, f"{self.manuskriptName}.msk")
