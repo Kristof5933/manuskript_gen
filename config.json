@@ -49,19 +49,19 @@
   },  
   "huge_no_revisions": {
     "title": "Huge project with no revisions",
-    "labels": { "min": 50, "max": 100 },
-    "characters": { "min": 60, "max": 100 },
-    "plots": { "min": 50, "max": 100 },
-    "world": { "min": 20, "max": 30, "detail": 3 },
-    "sections": { "min": 8, "max": 13, "detail": 3, "paragraphs" : 50, "revisions" : 0 }
+    "labels": { "quantity": 100 },
+    "characters": { "quantity": 100 },
+    "plots": { "quantity": 100 },
+    "world": { "quantity": 30, "levels": 3 },
+    "sections": { "quantity": 13, "levels": 3, "paragraphs" : 50, "revisions" : 0 }
   },
   "huge_with_revisions": {
     "title": "Huge project with revisions",
-    "labels": { "min": 50, "max": 100 },
-    "characters": { "min": 60, "max": 100 },
-    "plots": { "min": 50, "max": 100 },
-    "world": { "min": 20, "max": 30, "detail": 3 },
-    "sections": { "min": 8, "max": 13, "detail": 3, "paragraphs" : 50, "revisions" : 1 }
+    "labels": { "quantity": 100 },
+    "characters": { "quantity": 100 },
+    "plots": { "quantity": 100 },
+    "world": { "quantity": 30, "levels": 3 },
+    "sections": { "quantity": 13, "levels": 3, "paragraphs" : 50, "revisions" : 1 }
   },
   "many_small_no_revisions": {
     "title": "Project with many small chapters and no revisions",

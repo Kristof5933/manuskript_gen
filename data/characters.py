@@ -2,6 +2,7 @@
 # --!-- coding: utf8 --!--
 
 import os
+import random
 from util import FakeService
 from config import Config
 from data.abstractMmd import AbstractMmd
@@ -47,8 +48,6 @@ class Character(AbstractMmd):
 
         self._changePath(os.path.join(dataPath,safeFilename(f"{self.ID}-{self.Name}", "txt")))
 
-    # def save(self):
-    #     self.saveMMD()
 class Characters(AbstractData):
     def __init__(self, dataPath: str, config: Config):
         AbstractData.__init__(self,os.path.join(dataPath, "characters"))
@@ -57,9 +56,15 @@ class Characters(AbstractData):
         for i in range(config.charactersQuantity):
             self.characters.append(Character(self.dataPath, i))
 
-    def debug(self):
-        for character in self.characters:
-            print(f"{character.ID} = {character.Name}")
+        self.charactersWithPOV: list[Character] = [item for item in self.characters if item.POV == 1]
+
+    def getRandomPOVId(self):
+        if len(self.charactersWithPOV) > 0:
+            POV = random.choice(self.charactersWithPOV)
+            return POV.ID
+        else:
+            return None
+
 
     def save(self):
         os.makedirs(self.dataPath, exist_ok=True)

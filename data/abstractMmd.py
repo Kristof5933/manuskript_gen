@@ -12,7 +12,7 @@ class AbstractMmd(AbstractData):
 
     def __init__(self, path: str | None = None):
         AbstractData.__init__(self, path)
-        self.additionalProperties = {}
+        self.additionalProperties = collections.OrderedDict()
 
     def _serializableFields(self):
         for f in fields(self):

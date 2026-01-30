@@ -17,6 +17,12 @@ class Labels(AbstractMmd):
         for i in range(config.labelsQuantity):
             self.additionalProperties[fakeService.words(3)] = fakeService.color()
 
+    def getRandomLabelById(self):
+        fakeService = FakeService()
+        keys = list(self.additionalProperties.keys())
+
+        return fakeService.indexOfElement(keys)
+
 
 
 

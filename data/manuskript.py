@@ -9,6 +9,8 @@ from data.characters import Characters
 from data.summary import Summary
 from data.labels import Labels
 from data.infos import Infos
+from data.outline import Outline
+from data.status import Status
 
 class Manuskript:
     def __init__(self, path: str, profileName: str):
@@ -24,6 +26,9 @@ class Manuskript:
         self.summary = Summary(self.dataPath, self.config)
         self.labels = Labels(self.dataPath, self.config)
         self.infos = Infos(self.dataPath, self.config)
+        self.status = Status(self.dataPath, self.config)
+
+        self.outline = Outline(self.dataPath, self.config, self.status, self.characters, self.labels)
 
     def createAndCleanOutputFolder(self, outputFolder: str):
         os.makedirs(outputFolder, exist_ok=True)
@@ -41,6 +46,8 @@ class Manuskript:
         self.characters.save()
         self.labels.save()
         self.infos.save()
+        self.status.save()
+        self.outline.save()
 
         # TODO: handle zip version
         mskFile = os.path.join(self.basePath, f"{self.manuskriptName}.msk")
