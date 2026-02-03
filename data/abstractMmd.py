@@ -8,11 +8,13 @@ import collections
 @dataclass
 class AbstractMmd(AbstractData):
     additionalProperties: dict[str, str] = field(default_factory=dict, metadata={"saved": False})
+    body: str = field(default_factory=str, metadata={"saved": False})
     metaSpacing: int = field(default=16, repr=False, metadata={"saved": False})
 
     def __init__(self, path: str | None = None):
         AbstractData.__init__(self, path)
         self.additionalProperties = collections.OrderedDict()
+        self.body = None
 
     def _serializableFields(self):
         for f in fields(self):
@@ -22,7 +24,6 @@ class AbstractMmd(AbstractData):
     def save(self):
         metadata = collections.OrderedDict()
 
-        # TODO: add "body" 
         for key, value in self._serializableFields():
             if key != "additionalProperties":
                 metadata[key] = value
@@ -50,3 +51,6 @@ class AbstractMmd(AbstractData):
 
                 for line in lines[1:]:
                     file.write(metaSpacing * " " + line + "\n")
+
+            if self.body!=None:
+                file.write(self.body + "\n")
