@@ -11,6 +11,7 @@ from data.labels import Labels
 from data.infos import Infos
 from data.outline import Outline
 from data.status import Status
+from data.settings import Settings
 
 class Manuskript:
     def __init__(self, path: str, profileName: str):
@@ -27,6 +28,7 @@ class Manuskript:
         self.labels = Labels(self.dataPath, self.config)
         self.infos = Infos(self.dataPath, self.config)
         self.status = Status(self.dataPath, self.config)
+        self.settings = Settings(self.dataPath, self.config)
 
         self.outline = Outline(self.dataPath, self.config, self.status, self.characters, self.labels)
 
@@ -48,6 +50,10 @@ class Manuskript:
         self.infos.save()
         self.status.save()
         self.outline.save()
+        self.settings.save()
+
+        with open(os.path.join(self.dataPath, "MANUSKRIPT"), "w") as f:
+            f.write("1")
 
         # TODO: handle zip version
         mskFile = os.path.join(self.basePath, f"{self.manuskriptName}.msk")
