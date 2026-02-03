@@ -17,3 +17,7 @@ def safeFilename(filename: str, extension: str = None) -> str:
         name = "_" + name
 
     return re.sub(r"[^a-zA-Z0-9._\-+()]", "_", name)
+
+def formatNumber(n, totalCount):
+    width = len(str(totalCount))
+    return f"{n:0{width}d}"

@@ -4,7 +4,7 @@
 from __future__ import annotations
 import os
 from config import Config
-from util import safeFilename, FakeService
+from util import safeFilename, FakeService, formatNumber
 from dataclasses import dataclass, field, fields
 from data.abstractMmd import AbstractMmd
 from data.abstractData import AbstractData
@@ -60,7 +60,7 @@ class OutlineText(OutlineItem, AbstractMmd):
         self.setGoal = 100
         self.charCount = 50
 
-        self._changePath(os.path.join(dataPath,safeFilename(f"{self.ID}-{self.title}", "md")))
+        self._changePath(os.path.join(dataPath,safeFilename(f"{formatNumber(self.ID, config.sectionsQuantity)}-{self.title}", "md")))
 
 @dataclass
 class Outline(AbstractData):
