@@ -16,11 +16,6 @@ class AbstractMmd(AbstractData):
         self.additionalProperties = collections.OrderedDict()
         self.body = None
 
-    def _serializableFields(self):
-        for f in fields(self):
-            if f.metadata.get("saved", True):
-                yield f.name, getattr(self, f.name)
-
     def save(self):
         metadata = collections.OrderedDict()
 

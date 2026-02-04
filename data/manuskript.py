@@ -12,6 +12,7 @@ from data.infos import Infos
 from data.outline import Outline
 from data.status import Status
 from data.settings import Settings
+from data.world import World
 
 class Manuskript:
     def __init__(self, path: str, profileName: str):
@@ -29,6 +30,7 @@ class Manuskript:
         self.infos = Infos(self.dataPath, self.config)
         self.status = Status(self.dataPath, self.config)
         self.settings = Settings(self.dataPath, self.config)
+        self.world = World(self.dataPath, self.config)
 
         self.outline = Outline(self.dataPath, self.config, self.status, self.characters, self.labels)
 
@@ -49,6 +51,7 @@ class Manuskript:
         self.labels.save()
         self.infos.save()
         self.status.save()
+        self.world.save()
         self.outline.save()
         self.settings.save()
 
