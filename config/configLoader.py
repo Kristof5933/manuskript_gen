@@ -20,7 +20,7 @@ class Config:
         self.sectionsQuantity: int = sections.get("quantity", 0)
         self.sectionsLevels: int = sections.get("levels", 0)
         self.sectionsParagraphs: int = sections.get("paragraphs", 0)
-        self.sectionsRevisions: int = sections.get("revisions", 0)
+        self.sectionsRevisions: bool = sections.get("revisions", 0) == 1
 
 class ConfigLoader:
     _instance = None

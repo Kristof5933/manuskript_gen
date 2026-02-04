@@ -113,6 +113,8 @@ class OutlineText(OutlineItem, AbstractMmd):
         self.charCount = wordCount
         self.setGoal = fakeService.int(int(wordCount * 0.5), int(wordCount * 1.5))
 
+        # TODO : generate notes
+
         self._changePath(os.path.join(dataPath,safeFilename(f"{formatNumber(itemNumber, config.sectionsQuantity)}-{self.title}", "md")))
 
     def save(self):
@@ -124,13 +126,13 @@ class OutlineText(OutlineItem, AbstractMmd):
 class Outline(OutlineItem):
 
     def __init__(self, dataPath: str, config: Config, status: Status, characters: Characters, labels: Labels):
-        OutlineItem.__init__(self, os.path.join(dataPath, "outline"), config, 0, self)
+        OutlineItem.__init__(self, os.path.join(dataPath, "outline"), config, 1, self)
 
         self.status = status
         self.characters = characters
         self.labels = labels
 
-        self.generateNextLevel(config.sectionsLevels)
+        self.generateNextLevel(config.sectionsLevels, 1)
 
     def save(self):
         os.makedirs(self.dataPath, exist_ok=True)

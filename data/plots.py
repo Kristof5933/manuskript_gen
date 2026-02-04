@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# --!-- coding: utf8 --!--
+
 import os
 from config import Config
 from util import safeFilename, FakeService

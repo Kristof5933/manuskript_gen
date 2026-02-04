@@ -14,6 +14,7 @@ from data.status import Status
 from data.settings import Settings
 from data.world import World
 from data.plots import Plots
+from data.revisions import Revisions
 
 class Manuskript:
     def __init__(self, path: str, profileName: str):
@@ -35,6 +36,7 @@ class Manuskript:
         self.plots = Plots(self.dataPath, self.config, self.characters)
 
         self.outline = Outline(self.dataPath, self.config, self.status, self.characters, self.labels)
+        self.revisions = Revisions(self.dataPath, self.config, self.outline)
 
     def createAndCleanOutputFolder(self, outputFolder: str):
         os.makedirs(outputFolder, exist_ok=True)
@@ -57,6 +59,7 @@ class Manuskript:
         self.outline.save()
         self.settings.save()
         self.plots.save()
+        self.revisions.save()
 
         with open(os.path.join(self.dataPath, "MANUSKRIPT"), "w") as f:
             f.write("1")
