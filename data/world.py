@@ -14,6 +14,7 @@ class WorldBody(AbstractXml):
         self.config = config
         self.nodeName = "body"
         self.ID=0
+        self.fakeService = FakeService()
 
         for i in range(config.worldQuantity):
             self.addChild(WorldOutline(config, self))
@@ -37,7 +38,7 @@ class World(AbstractXml):
 @dataclass
 class WorldOutline(AbstractXml):
     name: str = None
-    ID: str = None
+    ID: int = None
     description: str = None
     passion: str = None
     conflict: str = None
@@ -45,16 +46,13 @@ class WorldOutline(AbstractXml):
 
     def __init__(self, config: Config, worldBody: WorldBody, level: int=2):
         AbstractXml.__init__(self)
-        fakeService = FakeService()
 
-        self.config = config
-
-        self.name = fakeService.words(5)
-        self.ID = str(worldBody.ID)
+        self.name = worldBody.fakeService.words(5)
+        self.ID = worldBody.ID
         worldBody.ID+=1
-        self.description = fakeService.markdown(1)
-        self.passion = fakeService.markdown(1)
-        self.conflict = fakeService.markdown(1)
+        self.description = worldBody.fakeService.markdown(1)
+        self.passion = worldBody.fakeService.markdown(1)
+        self.conflict = worldBody.fakeService.markdown(1)
 
         if level <= config.worldLevels:
             for i in range(config.worldQuantity):

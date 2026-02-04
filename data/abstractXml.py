@@ -4,7 +4,6 @@
 from __future__ import annotations
 from dataclasses import dataclass, field, fields
 from data.abstractData import AbstractData
-import collections
 import xml.etree.ElementTree as ET
 
 @dataclass
@@ -39,7 +38,10 @@ class AbstractXml(AbstractData):
         element = ET.Element(self.nodeName)
 
         for key, value in self._serializableFields():
-            element.set(key, value)
+            if type(value) is list:
+                element.set(key, ",".join(map(str, value)))
+            else:
+                element.set(key, str(value))
 
         for item in self.items:
             element.append(item._toXml())

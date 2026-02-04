@@ -13,6 +13,7 @@ from data.outline import Outline
 from data.status import Status
 from data.settings import Settings
 from data.world import World
+from data.plots import Plots
 
 class Manuskript:
     def __init__(self, path: str, profileName: str):
@@ -31,6 +32,7 @@ class Manuskript:
         self.status = Status(self.dataPath, self.config)
         self.settings = Settings(self.dataPath, self.config)
         self.world = World(self.dataPath, self.config)
+        self.plots = Plots(self.dataPath, self.config, self.characters)
 
         self.outline = Outline(self.dataPath, self.config, self.status, self.characters, self.labels)
 
@@ -54,6 +56,7 @@ class Manuskript:
         self.world.save()
         self.outline.save()
         self.settings.save()
+        self.plots.save()
 
         with open(os.path.join(self.dataPath, "MANUSKRIPT"), "w") as f:
             f.write("1")

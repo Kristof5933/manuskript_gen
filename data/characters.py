@@ -65,6 +65,18 @@ class Characters(AbstractData):
         else:
             return None
 
+    def getRandomCharactersId(self):
+        if len(self.characters) > 0:
+            result = set()
+
+            for i in range(random.randint(0, len(self.characters) // 5)):
+
+                result.add(random.choice(self.characters).ID)
+            
+            return list(result)
+        else:
+            return None
+
 
     def save(self):
         os.makedirs(self.dataPath, exist_ok=True)
