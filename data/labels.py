@@ -3,7 +3,8 @@
 
 import os
 from config import Config
-from util import safeFilename, FakeService
+from util import safeFilename
+from util.fakeService import FakeService
 from dataclasses import dataclass, field, fields
 from data.abstractMmd import AbstractMmd
 

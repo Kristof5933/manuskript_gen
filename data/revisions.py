@@ -4,7 +4,8 @@
 import os
 import random
 from config import Config
-from util import safeFilename, FakeService
+from util import safeFilename
+from util.fakeService import FakeService
 from dataclasses import dataclass, field, fields
 from data.abstractXml import AbstractXml
 from data.outline import Outline, OutlineFolder, OutlineText, OutlineItem

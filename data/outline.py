@@ -4,7 +4,8 @@
 from __future__ import annotations
 import os
 from config import Config
-from util import safeFilename, FakeService, formatNumber
+from util import safeFilename, formatNumber
+from util.fakeService import FakeService
 from dataclasses import dataclass, field, fields
 from typing import ClassVar
 from data.abstractMmd import AbstractMmd
@@ -12,6 +13,7 @@ from data.abstractData import AbstractData
 from data.characters import Character, Characters
 from data.status import Status
 from data.labels import Labels
+from util.references import References
 
 @dataclass
 class OutlineItem(AbstractData):
@@ -31,15 +33,18 @@ class OutlineItem(AbstractData):
         self.config = config
         self.items: list[OutlineItem] = []
 
-    def generateNextLevel(self, level: int, uniqueID:int = 0):
+    def generateNextLevel(self, level: int, references: References, uniqueID:int):
 
         for i in range(1, self.config.sectionsQuantity+1):
             if level == 1:
-                self.items.append(OutlineText(self.dataPath, self.config, self.outline, i, uniqueID, OutlineItem.LEVEL_TITLES[level-1]))
+                text = OutlineText(self.dataPath, self.config, self.outline, i, uniqueID, OutlineItem.LEVEL_TITLES[level-1])
+                references.addOutlineItem(text.ID, text.title)
+                self.items.append(text)
                 uniqueID+=1
             else:
                 folder = OutlineFolder(self.dataPath, self.config, self.outline, i, uniqueID, OutlineItem.LEVEL_TITLES[level-1])                
-                uniqueID = folder.generateNextLevel(level - 1, uniqueID+1)
+                references.addOutlineItem(folder.ID, folder.title)
+                uniqueID = folder.generateNextLevel(level - 1, references, uniqueID+1)
                 self.items.append(folder)
 
         return uniqueID
@@ -107,8 +112,7 @@ class OutlineText(OutlineItem, AbstractMmd):
         self.label = self.outline.labels.getRandomLabelById()
         self.status = self.outline.status.getRandomStatusID()
         
-        
-        self.body = fakeService.markdown(config.sectionsParagraphs)
+        self.body = fakeService.markdown(config.sectionsParagraphs, False)
         wordCount = len(self.body.split())
         self.charCount = wordCount
         self.setGoal = fakeService.int(int(wordCount * 0.5), int(wordCount * 1.5))
@@ -125,14 +129,14 @@ class OutlineText(OutlineItem, AbstractMmd):
 @dataclass
 class Outline(OutlineItem):
 
-    def __init__(self, dataPath: str, config: Config, status: Status, characters: Characters, labels: Labels):
+    def __init__(self, dataPath: str, config: Config, status: Status, characters: Characters, labels: Labels, references: References):
         OutlineItem.__init__(self, os.path.join(dataPath, "outline"), config, 1, self)
 
         self.status = status
         self.characters = characters
         self.labels = labels
 
-        self.generateNextLevel(config.sectionsLevels, 1)
+        self.generateNextLevel(config.sectionsLevels, references, 1)
 
     def save(self):
         os.makedirs(self.dataPath, exist_ok=True)

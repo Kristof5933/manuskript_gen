@@ -3,10 +3,11 @@
 
 import os
 import random
-from util import FakeService
 from config import Config
 from data.abstractMmd import AbstractMmd
 from data.abstractData import AbstractData
+from util.references import References
+from util.fakeService import FakeService
 from util import safeFilename
 from dataclasses import dataclass, field, fields
 
@@ -39,7 +40,7 @@ class Character(AbstractMmd):
         self.Epiphany = fakeService.markdown(2)
         self.additionalProperties["Phrase Summary"] = fakeService.words(20)
         self.additionalProperties["Paragraph Summary"] = fakeService.words(2)
-        self.additionalProperties["Full Summary"] = fakeService.markdown()
+        self.additionalProperties["Full Summary"] = fakeService.markdown(2)
         self.Notes: str = fakeService.markdown(2)
         self.Color: str = fakeService.color()
 
@@ -49,12 +50,14 @@ class Character(AbstractMmd):
         self._changePath(os.path.join(dataPath,safeFilename(f"{self.ID}-{self.Name}", "txt")))
 
 class Characters(AbstractData):
-    def __init__(self, dataPath: str, config: Config):
+    def __init__(self, dataPath: str, config: Config, references: References):
         AbstractData.__init__(self,os.path.join(dataPath, "characters"))
 
         self.characters: list[Character] = []
         for i in range(config.charactersQuantity):
-            self.characters.append(Character(self.dataPath, i))
+            character = Character(self.dataPath, i)
+            self.characters.append(character)
+            references.addCharacterItem(character.ID, character.Name)
 
         self.charactersWithPOV: list[Character] = [item for item in self.characters if item.POV == 1]
 

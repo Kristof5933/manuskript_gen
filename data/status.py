@@ -5,7 +5,7 @@ import os
 from dataclasses import dataclass, field, fields
 from data.abstractData import AbstractData
 from config import Config
-from util import FakeService
+from util.fakeService import FakeService
 import collections
 
 class Status(AbstractData):

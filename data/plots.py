@@ -3,17 +3,20 @@
 
 import os
 from config import Config
-from util import safeFilename, FakeService
+from util import safeFilename
+from util.fakeService import FakeService
 from dataclasses import dataclass, field, fields
 from data.abstractXml import AbstractXml
 from data.characters import Characters
+from util.references import References
 
 @dataclass
 class Plots(AbstractXml):
 
-    def __init__(self, dataPath: str, config: Config, characters: Characters):
+    def __init__(self, dataPath: str, config: Config, characters: Characters, references: References):
         AbstractXml.__init__(self)
         self.dataPath = os.path.join(dataPath, "plots.xml")
+        self.references = references
         self.config = config
         self.characters = characters
         self.nodeName = "root"
@@ -41,11 +44,14 @@ class Plot(AbstractXml):
         self.nodeName = "plot"
         self.name = plots.fakeService.words(5)
         self.ID = plots.ID
-        plots.ID+=1
         self.importance = plots.fakeService.int(0, 2)
         self.description = plots.fakeService.markdown(1)
         self.result = plots.fakeService.markdown(1)
         self.steps = plots.fakeService.markdown(1)
+
+        plots.ID+=1
+        plots.references.addPlotItem(self.ID, self.name)
+
 
         for _ in range(10):
             self.characters = plots.characters.getRandomCharactersId()

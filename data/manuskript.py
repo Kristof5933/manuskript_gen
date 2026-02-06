@@ -15,6 +15,8 @@ from data.settings import Settings
 from data.world import World
 from data.plots import Plots
 from data.revisions import Revisions
+from util.fakeService import FakeService
+from util.references import References
 
 class Manuskript:
     def __init__(self, path: str, profileName: str):
@@ -26,16 +28,17 @@ class Manuskript:
         self.dataPath = os.path.join(path, self.manuskriptName)
         self.createAndCleanOutputFolder(self.dataPath)
 
-        self.characters = Characters(self.dataPath, self.config)
+        fakeService = FakeService()
+
+        self.characters = Characters(self.dataPath, self.config, fakeService.references)
         self.summary = Summary(self.dataPath, self.config)
         self.labels = Labels(self.dataPath, self.config)
         self.infos = Infos(self.dataPath, self.config)
         self.status = Status(self.dataPath, self.config)
         self.settings = Settings(self.dataPath, self.config)
-        self.world = World(self.dataPath, self.config)
-        self.plots = Plots(self.dataPath, self.config, self.characters)
-
-        self.outline = Outline(self.dataPath, self.config, self.status, self.characters, self.labels)
+        self.world = World(self.dataPath, self.config, fakeService.references)
+        self.plots = Plots(self.dataPath, self.config, self.characters, fakeService.references)
+        self.outline = Outline(self.dataPath, self.config, self.status, self.characters, self.labels, fakeService.references)
         self.revisions = Revisions(self.dataPath, self.config, self.outline)
 
     def createAndCleanOutputFolder(self, outputFolder: str):

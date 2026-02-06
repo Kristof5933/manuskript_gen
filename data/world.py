@@ -3,16 +3,19 @@
 
 import os
 from config import Config
-from util import safeFilename, FakeService
+from util import safeFilename
+from util.fakeService import FakeService
 from dataclasses import dataclass, field, fields
 from data.abstractXml import AbstractXml
+from util.references import References
 
 @dataclass
 class WorldBody(AbstractXml):
-    def __init__(self, config: Config):
+    def __init__(self, config: Config, references: References):
         AbstractXml.__init__(self)
         self.config = config
         self.nodeName = "body"
+        self.references = references
         self.ID=0
         self.fakeService = FakeService()
 
@@ -23,14 +26,14 @@ class WorldBody(AbstractXml):
 class World(AbstractXml):
     version: str = "1.0"
 
-    def __init__(self, dataPath: str, config: Config):
+    def __init__(self, dataPath: str, config: Config, references: References):
         AbstractXml.__init__(self)
         self.dataPath = os.path.join(dataPath, "world.opml")
         self.config = config
         self.version = "1.0"
         self.nodeName = "opml"
 
-        self.addChild(WorldBody(config))
+        self.addChild(WorldBody(config, references))
 
     def save(self):
         AbstractXml.save(self)
@@ -49,10 +52,13 @@ class WorldOutline(AbstractXml):
 
         self.name = worldBody.fakeService.words(5)
         self.ID = worldBody.ID
-        worldBody.ID+=1
         self.description = worldBody.fakeService.markdown(1)
         self.passion = worldBody.fakeService.markdown(1)
         self.conflict = worldBody.fakeService.markdown(1)
+
+        worldBody.ID+=1
+        worldBody.references.addWorldItem(self.ID, self.name)
+
 
         if level <= config.worldLevels:
             for i in range(config.worldQuantity):
